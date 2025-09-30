@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const path = require('path');
 
 // Create transporter using Gmail
 const transporter = nodemailer.createTransport({
@@ -9,12 +10,18 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// Email options
+// Email options with attachment
 const mailOptions = {
   from: process.env.EMAIL_USER,
-  to: 'mohammedameen1089@gmail.com',     
-  subject: 'Test Email',
-  text: 'This is a test mail from Jnekins.'
+  to: 'mohammedameen1089@gmail.com',
+  subject: 'Jenkins Build Notification',
+  text: 'The Jenkins build has completed. Please find the console log attached.',
+  attachments: [
+    {
+      filename: 'console.log',
+      path: path.join(__dirname, 'console.log') // Path to saved log file
+    }
+  ]
 };
 
 // Send email
